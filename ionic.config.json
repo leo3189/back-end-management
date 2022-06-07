@@ -1,0 +1,7 @@
+{
+  "name": "uni-supply-bo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

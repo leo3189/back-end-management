@@ -1,0 +1,17 @@
+<app-custom-modal
+  [isVisible]="isOpen"
+  (cancelOnClicked)="handleCancel()"
+  (submitOnClicked)="saveOnClicked()"
+  [modalContent]="modalContent"
+  [isLoading]="isSaveLoading"
+  title="Create a group">
+  <ng-template #modalContent>
+    <form #mForm='ngForm'>
+      <nz-form-control>
+        <nz-input-group nzAddOnBefore="Group Name" nzSize="large">
+          <input nz-input placeholder="Name" [(ngModel)]="group.name" name="categoryName" required />
+        </nz-input-group>
+      </nz-form-control>
+    </form>
+  </ng-template>
+</app-custom-modal>

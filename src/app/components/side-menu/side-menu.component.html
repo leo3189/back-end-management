@@ -1,0 +1,23 @@
+<ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <ion-list-header>Inbox</ion-list-header>
+        <ion-note>hi@ionicframework.com</ion-note>
+
+        <ul nz-menu nzMode="inline">
+          <li nz-submenu nzTitle="Catalog" nzIcon="tags" nzOpen>
+            <ion-menu-toggle auto-hide="false">
+              <ul *ngFor="let c of catalogList">
+                <li nz-menu-item routerLinkActive #rla="routerLinkActive" [routerLink]="[c.url]" [nzSelected]="rla.isActive">
+                  {{ c.title }}
+                </li>
+              </ul>
+            </ion-menu-toggle>
+          </li>
+        </ul>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>

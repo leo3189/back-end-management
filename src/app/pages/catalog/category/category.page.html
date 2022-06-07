@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-capitalize">category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <nz-page-header>
+      <nz-page-header-extra>
+        <button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="createCategoryOnClicked()">Create a category</button>
+      </nz-page-header-extra>
+    </nz-page-header>
+  </div>
+
+  <div style="padding: 20px;">
+    <nz-table #table [nzData]="categories">
+      <thead>
+        <tr>
+          <th>Categories</th>
+          <th nzWidth="40px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of table.data">
+          <td>{{ category.type }}</td>
+          <td>
+            <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+              <i nz-icon nzType="ellipsis" style="font-size: x-large;"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="renameOnClicked(category)">Rename</li>
+                <li nz-menu-item (click)="deleteOnClicked(category.id)" nzDanger>Delete</li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</ion-content>
+
+<app-custom-modal
+  [isVisible]="isOpenModal"
+  (cancelOnClicked)="reset()"
+  (submitOnClicked)="saveOnClicked()"
+  [modalContent]="modalContent"
+  [isLoading]="isSaveLoading"
+  [title]="selectedCategory.type !== '' ? 'Edit Category' : 'Create Category'">
+  <ng-template #modalContent>
+    <form #mForm='ngForm'>
+      <nz-form-control>
+        <nz-input-group nzAddOnBefore="Category Name" nzSize="large">
+          <input nz-input placeholder="Name" [(ngModel)]="selectedCategory.type" name="categoryName" required />
+        </nz-input-group>
+      </nz-form-control>
+    </form>
+  </ng-template>
+</app-custom-modal>

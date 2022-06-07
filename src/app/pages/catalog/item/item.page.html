@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-capitalize">item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-header">
+    <nz-select style="width: 200px;" [ngModel]="0" nzSize="large" (ngModelChange)="categoryOnSelected($event)">
+      <nz-option [nzValue]="0" nzLabel="All Categories"></nz-option>
+      <nz-option *ngFor="let c of categories"
+        [nzValue]="c.id"
+        [nzLabel]="c.type"></nz-option>
+    </nz-select>
+
+    <nz-select *ngIf="selectedCategory > 0" 
+        style="width: 200px; margin-left: 20px;" 
+        [ngModel]="0" nzSize="large" 
+        [nzDropdownRender]="renderTemplate"
+        (ngModelChange)="groupOnSelected($event)">
+      <nz-option [nzValue]="0" nzLabel="All Groups"></nz-option>
+      <nz-option *ngFor="let g of groups"
+        [nzValue]="g.id"
+        [nzLabel]="g.name"></nz-option>
+    </nz-select>
+    <ng-template #renderTemplate>
+      <nz-divider></nz-divider>
+        <a class="add-item" (click)="isOpenGroupModal = true">
+          <i nz-icon nzType="plus"></i>
+          Add group
+        </a>
+    </ng-template>
+    <app-add-group 
+      [isOpen]="isOpenGroupModal" 
+      (cancelOnClicked)="groupModalOnCancel()"
+      [categoryId]="selectedCategory">
+    </app-add-group>
+
+    <div class="ion-float-right">
+      <button nz-button style="margin-left: 10px;"
+        nzType="primary" 
+        nzSize="large" 
+        nzShape="round" 
+        (click)="createItemOnClicked()">
+        Create an item
+      </button>
+    </div>
+  </div>
+
+  <div style="padding: 20px;">
+    <nz-table #table [nzData]="items" [nzLoading]="isTableLoading">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th *ngIf="selectedGroup > 0">Group</th>
+          <th *ngIf="selectedGroup === 0">Category</th>
+          <th>Price</th>
+          <th nzWidth="40px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of table.data" (click)="editItemOnClicked(item.id)">
+          <td>{{ item.name }}</td>
+          <td *ngIf="selectedGroup > 0">{{ item.catalogGroup?.name }}</td>
+          <td *ngIf="selectedGroup === 0">{{ item.catalogType?.type }}</td>
+          <td>{{ item.price | currency }}</td>
+          <td>
+            <a (click)="$event.stopPropagation(); moreOnClicked($event, menu)">
+              <i nz-icon nzType="ellipsis" style="font-size: x-large;"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="editItemOnClicked(item.id)">Edit</li>
+                <li nz-menu-item (click)="deleteOnClicked(item.id)" nzDanger>Delete</li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</ion-content>
+
+

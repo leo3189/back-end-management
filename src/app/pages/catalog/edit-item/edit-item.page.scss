@@ -1,0 +1,40 @@
+ion-content {
+	--padding-start: 20%;
+	--padding-end: 20%;
+	--padding-top: 20px;
+}
+
+.item-detail {
+	border-collapse: collapse;
+	width: 100%;
+
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 10px;
+	}
+
+	.first-column {
+		font-weight: 600;
+		width: 250px;
+	}
+}
+
+// .item-detail > tr 
+// 	:nth-child(1) {
+// 		font-weight: 600;
+// 		width: 250px;
+// 		background: blanchedalmond;
+// 	}
+
+
+.title-1 {
+	font-weight: 700;
+	font-size: large;
+	padding: 10px 0;
+}
+
+.spin-center {
+	height: 100%;
+	width: 100%;
+}

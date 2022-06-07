@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ id === 0 ? 'Create an item' : 'Edit item' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveOnClicked()" color="secondary">
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="spin-center" *ngIf="isLoading">
+    <nz-spin nzTip="Loading..." nzSize="large"></nz-spin>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div class="title-1">
+      Details
+    </div>
+
+    <div>
+      <table class="item-detail">
+        <tr>
+          <td class="first-column">Name</td>
+          <td>
+            <input nz-input placeholder="Item Name" nzBorderless [(ngModel)]="item.name" name="itemName"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="first-column">Category</td>
+          <td>
+            <nz-select style="width: 100%" [(ngModel)]="item.catalogTypeId" nzBorderless (ngModelChange)="categoryOnSelected($event)">
+              <nz-option *ngFor="let c of categories" [nzValue]="c.id" [nzLabel]="c.type"></nz-option>
+            </nz-select>
+          </td>
+        </tr>
+        <tr>
+          <td class="first-column">Group</td>
+          <td>
+            <nz-select style="width: 100%" [(ngModel)]="item.catalogGroupId" nzBorderless>
+              <nz-option *ngFor="let c of groups" [nzValue]="c.id" [nzLabel]="c.name"></nz-option>
+            </nz-select>
+          </td>
+        </tr>
+        <tr>
+          <td class="first-column" style="text-align: start;">Description</td>
+          <td>
+            <textarea style="width: 100%;" rows="4" nz-input nzBorderless [(ngModel)]="item.description"
+              [nzAutosize]="{ minRows: 4, maxRows: 4 }" name="description"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="margin-top: 50px;" class="title-1">
+      Variations
+    </div>
+
+    <div>
+      <table class="item-detail">
+        <tr>
+          <td class="first-column">Unit</td>
+          <td>
+            <input nz-input placeholder="Per Item" nzBorderless />
+          </td>
+        </tr>
+        <tr>
+          <td class="first-column">Price</td>
+          <td>
+            <input type="text" nz-input nzBorderless [(ngModel)]="item.price" name="price"
+              prefix="$ " mask="separator.2" thousandSeparator="," />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ion-content>
